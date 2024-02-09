@@ -11,7 +11,7 @@ const Main = () => {
     const isOtpVerification = location.pathname.includes('otpVerification')
     return (
         <div className="bg-white text-black">
-           {/* {isLogin || isSignup || isForgotPassword || isOtpVerification || <Navbar/>} */}
+           {isLogin || isSignup || isForgotPassword || isOtpVerification || <Navbar/>}
             <Outlet/>
            {isLogin || isSignup || isForgotPassword || isOtpVerification || <Footer/>}
             <ScrollRestoration/>
