@@ -1,0 +1,9 @@
+.ant-drawer-body {
+    padding: 0 !important;
+}
+.placeholder::-webkit-input-placeholder {
+    font-weight: 400;
+}
+.placeholder::-moz-placeholder {
+    font-weight: 400;
+}
