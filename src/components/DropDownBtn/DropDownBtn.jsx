@@ -83,7 +83,7 @@ const DropDownBtn = ({ title, menuData }) => {
                                                             >
                                                                 <span>
                                                                     {activeSubMenu === subMenuIndex ? (
-                                                                        <Link to={`/category/${menuItem.slug}/${subMenuItem?.slug}`}>
+                                                                        <Link to={`/product-filter?subcategory=${subMenuItem?.id}`}>
                                                                             <span onClick={()=> setCondition("subItem")} className="text-[#F40F6F] w-full flex items-center justify-between font-normal hover:font-medium text-sm">
                                                                                 {subMenuItem.name}
                                                                                 <MdOutlineKeyboardArrowDown size={22} />
@@ -105,7 +105,7 @@ const DropDownBtn = ({ title, menuData }) => {
                                                                                         (subSubMenuItem, subSubMenuIndex) => (
                                                                                             <Link
                                                                                                 key={subSubMenuIndex}
-                                                                                                to={`/category/${menuItem.slug}/${subMenuItem?.slug}/${subSubMenuItem?.slug}`}
+                                                                                                to={`/product-filter?child_category=${subSubMenuItem?.id}`}
                                                                                             >
                                                                                                 <li className="relative px-4 py-3">
                                                                                                     <span onClick={()=> setCondition("subSubItem")} className="hover:text-[#F40F6F] w-full font-normal hover:font-medium text-sm">

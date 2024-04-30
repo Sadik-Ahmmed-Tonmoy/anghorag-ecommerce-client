@@ -9,7 +9,7 @@ const renderSubSubMenu = (menuItem, subItems, subSubItem, onClose) => {
         return (
             <Menu.Item key={item.name} className="no-border-inline-end">
                 <NavLink
-                    to={`/category/${menuItem.slug}/${subItems?.slug}/${item?.slug}`}
+                    to={`/product-filter?child_category=${item?.id}`}
                     className={({ isActive }) => (isActive ? "text-red-500" : "")}
                     onClick={onClose} // Add onClick here to trigger close
                 >

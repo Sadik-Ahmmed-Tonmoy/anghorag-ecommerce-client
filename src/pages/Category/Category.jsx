@@ -39,11 +39,8 @@ function parseFilterString(filterString) {
 const Category = () => {
     const [searchParams, setSearchParam] = useSearchParams();
     const filterList = parseFilterString(searchParams.toString());
-    console.log(filterList?.category);
-    
     const [loading, setLoading] = useState(false);
     const [loadMoreURL, setLoadMoreURL] = useState("");
-
     const searchQuery = searchParams.get("search");
     const [category, setCategory] = useState([]);
     const {  paginationValue } = useContext(ProviderContext);
@@ -53,7 +50,8 @@ const Category = () => {
         search: searchQuery,
         // sort_by: sortedValue,
         category: JSON.stringify(filterList.category),
-        // subcategory: condition === "subItem" ? JSON.stringify([subCategoryId]) : [],
+        subcategory: JSON.stringify(filterList.subcategory),
+        child_category: JSON.stringify(filterList.child_category),
         // child_category: condition === "subSubItem" ? JSON.stringify([subSubCategoryId]) : [],
         // brand: JSON.stringify(filteredBrands),
         // color: JSON.stringify(filteredColors),
