@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
         element: <SellerPicksPageForAllProducts />,
       },
       {
-        path: "/category/:category",
+        path: "/product-filter",
         element: <Category />,
       },
       {

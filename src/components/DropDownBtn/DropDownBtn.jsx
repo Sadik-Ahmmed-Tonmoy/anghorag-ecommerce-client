@@ -57,7 +57,7 @@ const DropDownBtn = ({ title, menuData }) => {
                                 <li key={menuIndex} className="relative ps-5 pe-2 py-3" onMouseEnter={() => handleMenuEnter(menuIndex)}>
                                     <span>
                                         {activeMenu === menuIndex ? (
-                                            <Link to={`/category/${menuItem?.slug}`}>
+                                            <Link to={`/product-filter?category=${menuItem?.id}`}>
                                                 <span onClick={()=> setCondition("category")} className="text-[#F40F6F] w-full flex items-center justify-between font-normal hover:font-medium text-sm">
                                                     {menuItem.name} <MdOutlineKeyboardArrowDown size={22} />
                                                 </span>
