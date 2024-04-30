@@ -61,13 +61,13 @@ const FilterBySize = ({ title, items, isReset }) => {
               }`}
             >
               <span
-                className={`opacity-90 ${
+                className={`opacity-90 whitespace-nowrap ${
                   filteredSizes.includes(item.id)
                     ? "border-[#F40F6F] text-[#F40F6F]"
                     : ""
                 }`}
               >
-                {" "}
+               
                 {item.name}
               </span>
             </p>

@@ -13,7 +13,7 @@ const Home = () => {
   const data = isLoading === false && campaignBannerData?.data;
   
   return (
-    <> 
+    <>
       <Carousel />
       <CampaignBanner data={data} />
       <div className="px-2">

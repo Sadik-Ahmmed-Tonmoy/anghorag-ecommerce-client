@@ -216,7 +216,7 @@ const SingleProduct = () => {
                             </NavLink>
                         </div>
                     </div>
-                    <div className=" rounded-b-[8px] px-[3%] md:px-[5%] pt-1 pb-4 md:py-8">
+                    <div className=" rounded-b-[8px] px-[3%] md:px-[5%] pt-1 pb-4 md:py-8 list-disc">
                         {/* {isHome ? <ProductDescription /> : <Outlet />} */}
                         {activeTab === "product_description" && <ProductDescription singleProduct={singleProduct} isLoading={isLoading} />}
                         {queryString === "?product_description" && <ProductDescription singleProduct={singleProduct} isLoading={isLoading} />}

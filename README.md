@@ -9,4 +9,3 @@ Currently, two official plugins are available:
 # Anghorag
 # Anghorag
 # Anghorag
-# anghorag-ecommerce-client

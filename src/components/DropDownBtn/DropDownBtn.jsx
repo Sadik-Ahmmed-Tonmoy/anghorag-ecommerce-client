@@ -49,7 +49,8 @@ const DropDownBtn = ({ title, menuData }) => {
                 <MdKeyboardArrowDown size={22} />
             </div>
 
-            <div className={`absolute top-0 border w-full z-50 hover:cursor-pointer ${isDropdown ? "block" : "hidden"}`} onMouseLeave={handleMenuLeave}>
+            {isDropdown && (
+                <div className={`absolute top-0 border w-full z-50 hover:cursor-pointer ${isDropdown ? "block" : "hidden"}`} onMouseLeave={handleMenuLeave}>
                     <div className="mt-11 border bg-white text-black">
                         <ul>
                             {menuData?.map((menuItem, menuIndex) => (
@@ -131,6 +132,7 @@ const DropDownBtn = ({ title, menuData }) => {
                         </ul>
                     </div>
                 </div>
+            )}
         </div>
     );
 };

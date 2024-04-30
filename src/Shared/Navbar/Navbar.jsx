@@ -503,7 +503,7 @@ const Navbar = () => {
 
                         <div className="flex gap-4">
                             {buttonsData?.success === true &&
-                                buttonsData?.data.slice(0,2).map((item, index) => (
+                                buttonsData?.data.map((item, index) => (
                                     <span key={index}>
                                         <Link to={`/campaign/${item.id}`}>
                                             <button

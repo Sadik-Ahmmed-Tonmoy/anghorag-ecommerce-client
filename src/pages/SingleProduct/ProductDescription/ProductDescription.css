@@ -1,7 +1,11 @@
 .single_product_long_details{
     width: 100% !important;
-  
 }
+
+.single_product_long_details ul{
+  list-style: disc !important;
+}
+
 .single_product_long_details img{
     width: 100% !important;
 }
