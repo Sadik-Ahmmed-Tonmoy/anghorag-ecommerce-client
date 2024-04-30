@@ -48,6 +48,7 @@ const Category = () => {
 
     const queryParams = {
         search: searchQuery,
+           // pagination: paginationValue,
         // sort_by: sortedValue,
         category: JSON.stringify(filterList.category),
         subcategory: JSON.stringify(filterList.subcategory),

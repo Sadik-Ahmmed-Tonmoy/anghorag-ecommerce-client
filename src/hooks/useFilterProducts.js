@@ -15,7 +15,6 @@ const useFilterProducts = (queryParams) => {
                 const res = await   axios
                 .get(`product-filter`, {
                     params: {
-                        // pagination: paginationValue,
                         ...queryParams,
                     },
                 })
