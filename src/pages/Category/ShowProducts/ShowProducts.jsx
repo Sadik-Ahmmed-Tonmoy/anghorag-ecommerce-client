@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Select } from "antd";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Card from "../../../components/Card/Card";
 import { AiOutlineFilter } from "react-icons/ai";
@@ -8,43 +8,54 @@ import { Drawer, Space } from "antd";
 import SliderMenu from "../SliderMenu/SliderMenu";
 import "./ShowProducts.css";
 import { ProviderContext } from "../../../provider/Provider";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const ShowProducts = ({ data = [], handleLoadMore, loading, loadMoreURL }) => {
+const ShowProducts = ({ data = [],totalProductCount, handleLoadMore, loading, loadMoreURL }) => {
     const [showLess, setShowLess] = useState(true);
     const { setSortedValue, isRefetchCategory, setIsRefetchCategory } = useContext(ProviderContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+ 
 
     
-    // const handleLoadMore = () => {
-    //     setShowLess(false);
-    // };
-    const handleShowLess = () => {
-        setShowLess(true);
-    };
+    const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const selectedCheckboxValues = searchParams.getAll("sort_by");
+        setSelectedCheckboxes(selectedCheckboxValues.map((value) => parseInt(value, 10)));
+      }, [location.search]);
+    const handleSort = (key) => {
+        setSortedValue(key);
 
-    // const [data, setData] = useState([]);
+     
 
-    // useEffect(() => {
-    //   // Define a function to fetch data based on selectedValue
-    //   const fetchData = async () => {
-    //     if (selectedValue === "Oldest") {
-    //       const response = await axios.get(
-    //         "https://fakestoreapi.com/products?sort=desc"
-    //       );
-    //       setData(response.data);
-    //     } else if (selectedValue === "Latest") {
-    //       const response = await axios.get(
-    //         "https://fakestoreapi.com/products?sort=asc"
-    //       );
-    //       setData(response.data);
-    //     }
-    //   };
+    const isSelected = selectedCheckboxes.includes(key);
+    let updatedCheckboxes;
 
-    //   fetchData();
-    // }, [selectedValue]);
+    if (!isSelected) {
+      updatedCheckboxes = [ key];
+    } 
 
-    const handleSort = (event) => {
-        setIsRefetchCategory(!isRefetchCategory);
-        setSortedValue(event);
+    // Get the existing search parameters
+    const searchParams = new URLSearchParams(location.search);
+
+    // Remove existing parameters for the given title
+    searchParams.delete("sort_by");
+
+    // Add updated parameters
+    updatedCheckboxes.forEach((checkbox) => {
+      searchParams.append("sort_by", checkbox);
+    });
+
+    // Update the URL
+    navigate(`${location?.pathname}?${searchParams.toString()}`);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth", 
+    });
+ 
+  
     };
 
     // drawer
@@ -90,31 +101,14 @@ const ShowProducts = ({ data = [], handleLoadMore, loading, loadMoreURL }) => {
                     ]}
                 />
             </div>
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-                {showLess
-          ? data
-              .slice(0, 9)
-              .map((product, i) => <Card key={i} product={product} />)
-          : data.map((product, i) => <Card key={i} product={product} />)}
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-            </div> */}
-            {loading === false && data?.data?.length < 1 && (
+            {loading === false && data?.length < 1 && (
         <div className="flex justify-center items-center">
         <h3 className="text-[#F40F6F] text-2xl">No product found</h3>
     </div>
       )}
-            {Array.isArray(data?.data) && data?.data?.length > 0 && (
+            {Array.isArray(data) && data?.length > 0 && (
                 <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-2 md:gap-5">
-                    {data?.data?.map((item, i) => (
+                    {data?.map((item, i) => (
                         <Card key={i} item={item} />
                     ))}
                 </div>
@@ -126,9 +120,9 @@ const ShowProducts = ({ data = [], handleLoadMore, loading, loadMoreURL }) => {
                 </div>
             ) : (
                 <div className="flex justify-center mt-3 mb-5 md:mt-9 md:mb-[100px]">
-                    {data.total >
-                          data?.data?.length && (
-                        <button
+                    {
+                        totalProductCount > data?.length && (
+                            <button
                             onClick={() => {
                                 handleLoadMore(data.current_page);
                             }}
@@ -136,21 +130,9 @@ const ShowProducts = ({ data = [], handleLoadMore, loading, loadMoreURL }) => {
                         >
                             Load More
                         </button>
-                        // <span>
-                        //   {showLess ? (
-                        //     <button
-                        //       onClick={handleLoadMore}
-                        //       className="text-[#913BDB] hover:text-white hover:bg-[#9747FF] border border-[#913BDB] py-3 px-[72px] rounded-[4px] text-sm font-medium hover:cursor-pointer"
-                        //     >
-                        //       Load More
-                        //     </button>
-                        //   ) : (
-                        //     <button className="text-[#913BDB] border border-[#913BDB] py-3 px-[72px] rounded-[4px] text-sm font-medium hover:cursor-pointer">
-                        //       Show Less
-                        //     </button>
-                        //   )}
-                        // </span>
-                    )}
+                        )
+                    }
+                
                 </div>
             )}
         </div>

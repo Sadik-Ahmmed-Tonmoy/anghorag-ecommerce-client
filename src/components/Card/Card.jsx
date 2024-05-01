@@ -104,8 +104,8 @@ const Card = ({ item, itemNumber }) => {
                 )}
                 <div className=" card min-w-min card-compact p-3 border-[0.5px] border-[#ff87a680] rounded-lg  hover:shadow-xl mb-3 sm:mb-6 md:mb-9">
                     <Link to={`/product/${item?.slug}`}>
-                        <div className="mb-[14px] w-full mx-auto rounded-lg hover:cursor-pointer">
-                            <ImageURL className="w-full xs:h-[210px] object-fill rounded-lg shrink-0" image={item?.main_images && item?.main_images} />
+                        <div className="mb-[14px] h-[210px] w-full mx-auto rounded-lg hover:cursor-pointer">
+                            <ImageURL className="w-full h-[210px] object-fill rounded-lg shrink-0" image={item?.main_images && item?.main_images} />
                         </div>
 
                         {/* <div className="mb-[14px] w-full min-h-[210px]  mx-auto rounded-lg hover:cursor-pointer">

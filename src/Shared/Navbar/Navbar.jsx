@@ -236,7 +236,7 @@ const Navbar = () => {
         // setSearchParams(data);
         setCondition("search");
         // navigate(`/category/${data.search}`);
-        navigate(`/category?search=${data.searchQuery}`);
+        navigate(`/product-filter?search=${data.searchQuery}`);
 
         // if (data.searchQuery.length > 0) {
         //   // setSearchParams(data);

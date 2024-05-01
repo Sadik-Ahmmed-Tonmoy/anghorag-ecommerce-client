@@ -1,43 +1,51 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { ProviderContext } from "../../../../provider/Provider";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const FilterBySize = ({ title, items, isReset }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isShow, setShow] = useState(true);
-  const [filteredSizes, setFilteredSizes] = useState([]);
 
-  const { isRefetchCategory, setIsRefetchCategory } =
-    useContext(ProviderContext);
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
 
   useEffect(() => {
-    const storedSizes = sessionStorage.getItem("filteredSizes");
-    if (storedSizes) {
-      setFilteredSizes(JSON.parse(storedSizes));
-    }
-  }, []);
+    const searchParams = new URLSearchParams(location.search);
+    const selectedCheckboxValues = searchParams.getAll(title?.toLowerCase());
+    setSelectedCheckboxes(selectedCheckboxValues.map((value) => parseInt(value, 10)));
+  }, [location.search, title]);
 
-  useEffect(() => {
-    if (isReset) {
-      setFilteredSizes([]); // Reset filtered categories
-    }
-  }, [isReset]);
+  const handleCategorySelection = (key) => {
 
-  const handleSizeSelection = (size) => {
-    setIsRefetchCategory(!isRefetchCategory);
-    const updatedSizes = [...filteredSizes];
-    const index = updatedSizes.indexOf(size);
+    const isSelected = selectedCheckboxes.includes(key);
+    let updatedCheckboxes;
 
-    if (index === -1) {
-      updatedSizes.push(size);
+    if (!isSelected) {
+      updatedCheckboxes = [...selectedCheckboxes, key];
     } else {
-      updatedSizes.splice(index, 1);
+      updatedCheckboxes = selectedCheckboxes.filter((item) => item !== key);
     }
 
-    setFilteredSizes(updatedSizes);
-    // Store in session storage
-    sessionStorage.setItem("filteredSizes", JSON.stringify(updatedSizes));
-  };
+    // Get the existing search parameters
+    const searchParams = new URLSearchParams(location.search);
 
+    // Remove existing parameters for the given title
+    searchParams.delete(title?.toLowerCase());
+
+    // Add updated parameters
+    updatedCheckboxes.forEach((checkbox) => {
+      searchParams.append(title?.toLowerCase(), checkbox);
+    });
+
+    // Update the URL
+    navigate(`${location?.pathname}?${searchParams.toString()}`);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth", 
+    });
+ 
+  };
   return (
     <div className="mt-4 md:mt-11">
       <div
@@ -49,20 +57,20 @@ const FilterBySize = ({ title, items, isReset }) => {
       </div>
       <div className="border border-[#F40F6F] my-1 md:my-3"></div>
       {isShow && (
-        <div className="flex flex-wrap gap-2 w-10/12">
-          {items.map((item, i) => (
+        <div className="flex flex-wrap gap-2 ">
+          {items?.map((item, i) => (
             <p
               key={i}
-              onClick={() => handleSizeSelection(item.id)}
+              onClick={() => handleCategorySelection(item.id)}
               className={`text-sm font-medium border px-3 py-2 w-min rounded-md text-black hover:cursor-pointer ${
-                filteredSizes.includes(item.id)
+                selectedCheckboxes.includes(item.id)
                   ? "border-[#F40F6F]"
                   : "border-black"
               }`}
             >
               <span
                 className={`opacity-90 whitespace-nowrap ${
-                  filteredSizes.includes(item.id)
+                  selectedCheckboxes.includes(item.id)
                     ? "border-[#F40F6F] text-[#F40F6F]"
                     : ""
                 }`}

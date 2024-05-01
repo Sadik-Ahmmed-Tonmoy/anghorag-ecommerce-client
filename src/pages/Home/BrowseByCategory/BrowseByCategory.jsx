@@ -118,7 +118,7 @@ const BrowseByCategory = () => {
           {categories &&
             categories?.map((item, i) => (
               <div key={i}>
-                <Link to={`/category/${item?.slug}`}>
+                <Link to={`/product-filter?category=${item?.id}`}>
                   <div onClick={()=> setCondition("category")} className="w-full rounded-lg hover:shadow-lg hover:shadow-[#FFBFCD66] border-[0.5px] border-[#FFF1F4] hover:border-[#FFBFCD] hover:cursor-pointer">
                     <div className="flex flex-col items-center mt-8">
                       {/* <img

@@ -4,12 +4,12 @@ import { BsCheckLg } from "react-icons/bs";
 
 const CheckBox = ({ title, isChecked, id, handleCategorySelection }) => {
     const handleCheckboxChange = () => {
-        handleCategorySelection(id);
+        handleCategorySelection(id, title);
         
     };
 
     return (
-        <label className="flex items-center gap-2 my-4 text-sm font-normal text-black w-fit h-min">
+        <label className="flex items-center gap-2 my-4 text-sm font-normal hover:cursor-pointer text-black w-fit h-min">
             <div className="relative flex items-center">
                 <input
                     type="checkbox"

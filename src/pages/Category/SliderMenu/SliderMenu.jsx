@@ -1,26 +1,17 @@
-import { Slider } from "antd";
-import React, { useContext, useEffect, useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { TbCurrencyTaka } from "react-icons/tb";
-import FilterItems from "./FilterItems/FilterItems";
-import FilterBySize from "./FilterBySize/FilterBySize";
-import FilterByPrice from "./FilterByPrice/FilterByPrice";
-import useNavItems from "../../../hooks/useNavItems";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useNavItems from "../../../hooks/useNavItems";
+import FilterByPrice from "./FilterByPrice/FilterByPrice";
+import FilterBySize from "./FilterBySize/FilterBySize";
 import FilterItemsForCategories from "./FilterItemsForCategories/FilterItemsForCategories";
-import FilterItemsForBrands from "./FilterItemsForBrands/FilterItemsForBrands";
-import FilterItemsForColors from "./FilterItemsForColors/FilterItemsForColors";
-import { ProviderContext } from "../../../provider/Provider";
-import { useParams } from "react-router-dom";
 
 const SliderMenu = () => {
-    const { isRefetchCategory, setIsRefetchCategory, isReset, setIsReset} = useContext(ProviderContext);
+    const navigate = useNavigate();
     const { navItems, isMenuDataLoading, refetch } = useNavItems();
     const menuData = isMenuDataLoading === false ? navItems?.menuData : [];
-    const { category } = useParams();
-    useEffect(() => {
-        refetch();
-    }, [category]);
+    const [isReset, setIsReset] = useState(false);
+  
     const [Brands, setBrands] = useState([]);
 
     useEffect(() => {
@@ -66,35 +57,21 @@ const SliderMenu = () => {
     }, []);
 
  
-    // const handleReset = () => {
-    //     setIsRefetchCategory(!isRefetchCategory);
-    //     setIsReset(!isReset);
-    //     sessionStorage.removeItem("filteredCategories");
-    //     sessionStorage.removeItem("filteredBrands");
-    //     sessionStorage.removeItem("filteredColors");
-    //     sessionStorage.removeItem("filteredSizes");
-    //     sessionStorage.removeItem("priceRange");
-    // };
-    useEffect(() => {
-      if (isReset) {
-          sessionStorage.removeItem("filteredCategories");
-          sessionStorage.removeItem("filteredBrands");
-          sessionStorage.removeItem("filteredColors");
-          sessionStorage.removeItem("filteredSizes");
-          sessionStorage.removeItem("priceRange");
-          setIsReset(false); // Reset is done, set isReset back to false
-      }
-  }, [isReset]);
+const handleReset = () => {
+    navigate(`${location?.pathname}`);
+    setIsReset(!isReset);
+}
+ 
 
     return (
         <div className="w-10/12 mx-auto bg-white">
-            <FilterItemsForCategories title={"category"} items={menuData} isReset={isReset} />
-            <FilterItemsForBrands title={"brand"} brands={Brands} isReset={isReset} />
-            <FilterItemsForColors title={"colors"} colors={colors} isReset={isReset} />
-            <FilterBySize title={"size"} items={sizes} isReset={isReset} />
+            <FilterItemsForCategories title={"category"} items={menuData}  />
+            <FilterItemsForCategories title={"brand"} items={Brands}  />
+            <FilterItemsForCategories title={"colors"} items={colors}  />
+            <FilterBySize title={"size"} items={sizes}  />
             <FilterByPrice isReset={isReset} />
             <div className=" mt-11">
-                <button onClick={() => setIsReset(true)} className="text-white bg-[#F40F6F] w-full h-[42px]  mb-[100px] rounded hover:cursor-pointer">
+                <button onClick={handleReset} className="text-white bg-[#F40F6F] w-full h-[42px]  mb-[100px] rounded hover:cursor-pointer">
                     All Reset
                 </button>
             </div>

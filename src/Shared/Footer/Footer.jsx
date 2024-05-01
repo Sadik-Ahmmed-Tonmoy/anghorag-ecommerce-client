@@ -55,7 +55,7 @@ const Footer = () => {
           </header>
           {categoryData?.menuData &&
             categoryData?.menuData.map((item, index) => (
-              <Link key={index} to={`/category/${item?.slug}`}>
+              <Link key={index} to={`/product-filter?category=${item?.id}`}>
                 <p onClick={()=> setCondition("category")} className="link link-hover text-sm">{item.name}</p>
               </Link>
             ))}

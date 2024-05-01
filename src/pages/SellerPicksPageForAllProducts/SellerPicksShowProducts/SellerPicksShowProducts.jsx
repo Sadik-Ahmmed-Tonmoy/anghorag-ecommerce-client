@@ -1,13 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Select } from "antd";
 import React, { useContext, useState } from "react";
 
-import { AiOutlineFilter } from "react-icons/ai";
-import { Drawer, Space } from "antd";
 // import "./ShowProducts.css";
-import { ProviderContext } from "../../../provider/Provider";
 import Card from "../../../components/Card/Card";
-import SliderMenu from "../../Category/SliderMenu/SliderMenu";
+import { ProviderContext } from "../../../provider/Provider";
 
 const SellerPicksShowProducts = ({ data = [], handleLoadMore, loading, loadMoreURL }) => {
     const [showLess, setShowLess] = useState(true);
